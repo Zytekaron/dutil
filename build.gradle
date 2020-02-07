@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'maven'
+}
+
+apply plugin: 'maven'
+
+group 'tk.zytekaron.dutil'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+// util3 uutil utilr utilia utiliq @missme
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    compile 'tk.zytekaron:jvar:1.0.1'
+    compileOnly 'net.dv8tion:JDA:4.1.1_105'
+}
