@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
+import org.jetbrains.annotations.NotNull;
 import tk.zytekaron.dutil.events.EventListener;
 import tk.zytekaron.dutil.events.SubscribedListener;
 import tk.zytekaron.dutil.menu.Menu;
@@ -106,7 +107,7 @@ public class Paginator extends Menu {
         }
     }
     
-    private void handleReaction(User user, MessageReaction reaction) {
+    private void handleReaction(@NotNull User user, MessageReaction reaction) {
         if (user.getIdLong() != authorID) return;
         MessageReaction.ReactionEmote emote = reaction.getReactionEmote();
         String id = "";
@@ -130,7 +131,7 @@ public class Paginator extends Menu {
         }
     }
     
-    private void handleEvent(MessageReactionAddEvent event) {
+    private void handleEvent(@NotNull MessageReactionAddEvent event) {
         User user = event.getUser();
         if (user == null) return;
         MessageReaction reaction = event.getReaction();
@@ -142,13 +143,13 @@ public class Paginator extends Menu {
         }
     }
     
-    private void handleEvent(MessageReactionRemoveEvent event) {
+    private void handleEvent(@NotNull MessageReactionRemoveEvent event) {
         User user = event.getUser();
         if (user == null) return;
         handleReaction(user, event.getReaction());
     }
     
-    private void handleEvent(MessageReceivedEvent event) {
+    private void handleEvent(@NotNull MessageReceivedEvent event) {
         Message message = event.getMessage();
         String content = message.getContentRaw();
         try {
@@ -208,7 +209,7 @@ public class Paginator extends Menu {
         this.infoEmoji = infoEmoji;
     }
     
-    public void setAuthor(User author) {
+    public void setAuthor(@NotNull User author) {
         this.authorID = author.getIdLong();
     }
     

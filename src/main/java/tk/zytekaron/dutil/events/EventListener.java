@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 public class EventListener extends ListenerAdapter {
     private IdentityHashMap<Class<? extends GenericEvent>, Collection<Event<GenericEvent>>> events = new IdentityHashMap<>();
     
+    @SuppressWarnings("unchecked")
     public <T extends GenericEvent> SubscribedListener add(Class<T> type, Predicate<T> predicate, Consumer<T> consumer) {
         Collection<Event<GenericEvent>> collection = events.getOrDefault(type, new ArrayList<>());
         Event<T> listener = new Event<>(consumer, predicate);
@@ -25,26 +26,21 @@ public class EventListener extends ListenerAdapter {
     }
     
     public <T extends GenericEvent> SubscribedListener add(Class<T> type, Consumer<T> consumer) {
-        Collection<Event<GenericEvent>> collection = events.getOrDefault(type, new ArrayList<>());
-        Event<T> listener = new Event<>(consumer);
-        collection.add((Event<GenericEvent>) listener);
-        events.put(type, collection);
-        return () -> {
-            Collection<Event<GenericEvent>> coll = events.get(type);
-            coll.remove(listener);
-        };
+        return add(type, __ -> true, consumer);
     }
     
     @Override
-    public void onGenericEvent(GenericEvent event) {
+    public void onGenericEvent(@NotNull GenericEvent event) {
         dispatch(event);
     }
     
-    private <T extends GenericEvent> void dispatch(GenericEvent event) {
+    private void dispatch(GenericEvent event) {
         Class<? extends GenericEvent> type = event.getClass();
         events.forEach((registered, coll) -> {
             if (registered.isAssignableFrom(type)) {
-                coll.forEach(it -> it.handle(event));
+                for (Event<GenericEvent> genericEventEvent : coll) {
+                    genericEventEvent.handle(event);
+                }
             }
         });
     }
