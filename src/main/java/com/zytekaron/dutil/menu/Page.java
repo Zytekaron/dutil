@@ -1,4 +1,4 @@
-package tk.zytekaron.dutil.menu;
+package com.zytekaron.dutil.menu;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 

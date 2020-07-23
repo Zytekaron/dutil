@@ -1,5 +1,8 @@
-package tk.zytekaron.dutil.menu.paginator;
+package com.zytekaron.dutil.menu.paginator;
 
+import com.zytekaron.dutil.events.SubscribedListener;
+import com.zytekaron.dutil.menu.Page;
+import com.zytekaron.dutil.menu.PageType;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageReaction;
@@ -8,19 +11,18 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import org.jetbrains.annotations.NotNull;
-import tk.zytekaron.dutil.events.EventListener;
-import tk.zytekaron.dutil.events.SubscribedListener;
-import tk.zytekaron.dutil.menu.Menu;
-import tk.zytekaron.dutil.menu.Page;
-import tk.zytekaron.dutil.menu.PageType;
+import com.zytekaron.dutil.events.EventListener;
+import com.zytekaron.dutil.menu.Menu;
 import tk.zytekaron.jvar.Maths;
-import tk.zytekaron.jvar.timer.RunnableTimer;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class Paginator extends Menu {
+    ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     public static final int INFO = -1;
     private boolean enabled = false;
     private boolean updateOnRemove = true;
@@ -55,7 +57,7 @@ public class Paginator extends Menu {
         }
         enabled = true;
         if (timeoutUnit != null && timeoutDelay > 0) {
-            new RunnableTimer(timeoutDelay, timeoutUnit, this::stop).run();
+            service.schedule(this::stop, timeoutDelay, timeoutUnit);
         }
         addListener = listener.add(MessageReactionAddEvent.class, addPredicate, this::handleEvent);
         removeListener = listener.add(MessageReactionRemoveEvent.class, removePredicate, this::handleEvent);

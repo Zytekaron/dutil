@@ -1,11 +1,8 @@
-package tk.zytekaron.dutil;
+package com.zytekaron.dutil;
 
+import com.zytekaron.dutil.events.EventListener;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import tk.zytekaron.dutil.events.EventListener;
-import tk.zytekaron.dutil.menu.paginator.Paginator;
 
 public class Main {
     private static JDA jda;

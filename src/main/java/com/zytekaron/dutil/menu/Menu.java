@@ -1,7 +1,7 @@
-package tk.zytekaron.dutil.menu;
+package com.zytekaron.dutil.menu;
 
+import com.zytekaron.dutil.events.EventListener;
 import net.dv8tion.jda.api.entities.Message;
-import tk.zytekaron.dutil.events.EventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;

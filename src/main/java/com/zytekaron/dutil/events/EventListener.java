@@ -1,4 +1,4 @@
-package tk.zytekaron.dutil.events;
+package com.zytekaron.dutil.events;
 
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

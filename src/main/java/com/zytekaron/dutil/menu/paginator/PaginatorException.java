@@ -1,4 +1,4 @@
-package tk.zytekaron.dutil.menu.paginator;
+package com.zytekaron.dutil.menu.paginator;
 
 public class PaginatorException extends RuntimeException {
     
